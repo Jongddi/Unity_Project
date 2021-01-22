@@ -35,7 +35,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         //Direction Sprite
-        if (Input.GetButtonDown("Horizontal"))
+        if (Input.GetButton("Horizontal"))
         {
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
         }
@@ -89,9 +89,35 @@ public class PlayerMove : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
 		{
             //Debug.Log("플레이어가 맞았습니다!");
+            
+            //Attack
+            if (rigid.velocity.y < 0 && transform.position.y > collision.transform.position.y)
+			{
+                OnAttack(collision.transform);
+			}
+            else //Damaged
+                OnDamaged(collision.transform.position);
+        }
+
+        else if (collision.gameObject.tag == "Spikes") //가시 충돌이벤트 분리
+        {
             OnDamaged(collision.transform.position);
-		}
+        }
+    }
+
+    void OnAttack(Transform enemy)
+	{
+        //Point
+
+
+        //Reaction Force
+        rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);       //몬스터 잡을때 반발력(반동)
+
+        //Enemy Die
+        Enemy_Move enemyMove = enemy.GetComponent<Enemy_Move>();
+        enemyMove.OnDamaged();
 	}
+
 
     //피격 시 무적
     void OnDamaged(Vector2 targetPos)
