@@ -93,6 +93,7 @@ public class PlayerMove : MonoBehaviour
 		}
 	}
 
+    //피격 시 무적
     void OnDamaged(Vector2 targetPos)
 	{
         //Chage layer (Immortal Active)
@@ -104,5 +105,17 @@ public class PlayerMove : MonoBehaviour
         // Reaction Force
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
         rigid.AddForce(new Vector2(dirc, 1)*7, ForceMode2D.Impulse);
+
+        //Animation
+        anim.SetTrigger("doDamaged");
+
+        Invoke("OffDamaged", 3);             //무적시간 설정
+	}
+
+    //무적해제
+    void OffDamaged()
+	{
+        gameObject.layer = 10;
+        spriteRenderer.color = new Color(1, 1, 1, 1);
 	}
 }
