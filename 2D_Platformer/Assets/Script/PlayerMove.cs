@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    public GameManager gameManager;
     public float maxSpeed;
     public float jumpPower;
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     Animator anim;
-    
-    
+    CapsuleCollider2D capsuleCollider;
+
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
     }
 
     void Update() //단발적 입력
@@ -105,10 +108,44 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    void OnAttack(Transform enemy)
+	 void OnTriggerEnter2D(Collider2D collision) //동전, 피니쉬라인
+	{
+        if (collision.gameObject.tag == "Item")                     //동전
+		{
+            // Point
+            bool isBronze = collision.gameObject.name.Contains("Bronze");
+            bool isSilver = collision.gameObject.name.Contains("Silver");
+            bool isGold = collision.gameObject.name.Contains("Gold");
+
+            if(isBronze)
+			{
+                gameManager.stagePoint += 50;
+            }
+            else if(isSilver)
+			{
+                gameManager.stagePoint += 100;
+            }
+            else if(isGold)
+			{
+                gameManager.stagePoint += 300;
+            }
+            
+
+            // Deactive Item
+            collision.gameObject.SetActive(false);
+		}
+
+        else if(collision.gameObject.tag == "Finish")
+		{
+            // Next Stage
+            gameManager.NextStage();
+		}
+	}
+
+	void OnAttack(Transform enemy)
 	{
         //Point
-
+        gameManager.stagePoint += 100;
 
         //Reaction Force
         rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);       //몬스터 잡을때 반발력(반동)
@@ -122,6 +159,9 @@ public class PlayerMove : MonoBehaviour
     //피격 시 무적
     void OnDamaged(Vector2 targetPos)
 	{
+        // Health Down
+        gameManager.HealthDown();
+
         //Chage layer (Immortal Active)
         gameObject.layer = 11;
 
@@ -143,5 +183,25 @@ public class PlayerMove : MonoBehaviour
 	{
         gameObject.layer = 10;
         spriteRenderer.color = new Color(1, 1, 1, 1);
+	}
+
+   public void OnDie()
+	{
+        //Sprite Alpha
+        spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+
+        //Sprite Flip Y
+        spriteRenderer.flipY = true;
+
+        //Collider Disable
+        capsuleCollider.enabled = false;
+
+        //Die Effect Jump
+        rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+    }
+
+    public void VelocityZero()
+	{
+        rigid.velocity = Vector2.zero;
 	}
 }
