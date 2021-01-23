@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour        // 점수, 스테이지 관리
 {
@@ -11,15 +13,27 @@ public class GameManager : MonoBehaviour        // 점수, 스테이지 관리
     public PlayerMove player;
     public GameObject[] Stages;
 
+    public Image[] UIhealth;
+    public Text UIPoint;
+    public Text UIStage;
+    public GameObject UIRestartBtn;
+
+    void Update()
+    {
+        UIPoint.text = (totalPoint + stagePoint).ToString();
+    }
+
     public void NextStage()
     {
         //Change Stage
-        if(stageIndex < Stages.Length)
+        if(stageIndex < Stages.Length-1)
 		{
             Stages[stageIndex].SetActive(false);
             stageIndex++;
             Stages[stageIndex].SetActive(true);
             PlayerReposition();
+
+            UIStage.text = "STAGE" + (stageIndex + 1);
         }
         else  // Game Clear
         {
@@ -30,21 +44,30 @@ public class GameManager : MonoBehaviour        // 점수, 스테이지 관리
             Debug.Log("게임 클리어!");
 
             //Restart Button UI
+            Text btntext = UIRestartBtn.GetComponentInChildren<Text>();
+            btntext.text = "Clear!";
+            ViewBtn();
 
-
-		}
+        }
 
         //Calculate Point
         totalPoint += stagePoint;
         stagePoint = 0;
     }
 
-    public void HealthDown()
+	public void HealthDown()
 	{
         if (health > 1)
+		{
             health--;
+            UIhealth[health].color = new Color(1, 0, 0, 0.4f);
+        }
+            
 		else
 		{
+            //ALL Health UI
+            UIhealth[0].color = new Color(1, 0, 0, 0.4f);
+
             //Player Die Effect
             player.OnDie();
 
@@ -52,6 +75,7 @@ public class GameManager : MonoBehaviour        // 점수, 스테이지 관리
             Debug.Log("죽었습니다.");
 
             //Retry Button UI
+            UIRestartBtn.SetActive(true);
 		}
     }
 
@@ -67,8 +91,6 @@ public class GameManager : MonoBehaviour        // 점수, 스테이지 관리
 
             // Health Down
             HealthDown();
-
-
         }
     }
 
@@ -77,4 +99,15 @@ public class GameManager : MonoBehaviour        // 점수, 스테이지 관리
         player.transform.position = new Vector3(0, 0, -1);
         player.VelocityZero();
     }
+
+    public void ViewBtn()
+	{
+        UIRestartBtn.SetActive(true);
+	}
+
+    public void Restart()
+	{
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
+	}
 }
