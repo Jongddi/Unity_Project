@@ -227,6 +227,9 @@ public class PlayerMove : MonoBehaviour
 
         //Die Effect Jump
         rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+
+        //Sounds
+        PlaySound("DAMAGED");
     }
 
     //원위치

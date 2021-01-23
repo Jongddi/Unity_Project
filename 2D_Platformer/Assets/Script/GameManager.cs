@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour        // 점수, 스테이지 관리
 
             //Retry Button UI
             UIRestartBtn.SetActive(true);
-		}
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
