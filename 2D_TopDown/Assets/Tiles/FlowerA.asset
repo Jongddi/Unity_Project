@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
   m_Name: FlowerA
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 5163650653513351585, guid: ce96febaf00900849a1018a45cb9d4cd,
+  m_DefaultSprite: {fileID: 63249072764208315, guid: ce96febaf00900849a1018a45cb9d4cd,
     type: 3}
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 1
   m_TilingRules:
   - m_Id: 1
     m_Sprites:
-    - {fileID: 5163650653513351585, guid: ce96febaf00900849a1018a45cb9d4cd, type: 3}
-    - {fileID: -1077521076084284925, guid: ce96febaf00900849a1018a45cb9d4cd, type: 3}
+    - {fileID: 63249072764208315, guid: ce96febaf00900849a1018a45cb9d4cd, type: 3}
+    - {fileID: -5285170049056773700, guid: ce96febaf00900849a1018a45cb9d4cd, type: 3}
     m_GameObject: {fileID: 0}
     m_AnimationSpeed: 1
     m_PerlinScale: 0.5
