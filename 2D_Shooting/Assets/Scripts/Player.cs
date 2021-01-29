@@ -142,7 +142,7 @@ public class Player : MonoBehaviour
 		{
             if (isHit)
                 return;
-
+            //주석
             isHit = true;
             life--;
             manager.UpdateLifeIcon(life);
