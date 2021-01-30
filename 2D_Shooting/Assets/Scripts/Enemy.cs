@@ -70,7 +70,7 @@ public class Enemy : MonoBehaviour
 
    public void OnHit(int dmg)
 	{
-        if (health < 0)             //예외처리
+        if (health <= 0)             //예외처리
             return;
 
         health -= dmg;
