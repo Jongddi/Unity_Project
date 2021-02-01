@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
-{ 
+{
     public bool isTouchTop;
     public bool isTouchBottom;
     public bool isTouchRight;
@@ -24,18 +24,18 @@ public class Player : MonoBehaviour
     public GameObject bulletObjB;
     public GameObject boomEffect;
 
-    public GameManager manager;
+    public GameManager gameManager;
+    public ObjectManager objectManager;
     public bool isHit;
     public bool isBoomTime;
     Animator anim;
 
-	private void Awake()
-	{
+    private void Awake()
+    {
         anim = GetComponent<Animator>();
-
     }
 
-	void Update()
+    void Update()
     {
         Move();
         Fire();
@@ -43,8 +43,8 @@ public class Player : MonoBehaviour
         Boom();
     }
 
-	void Move()
-	{
+    void Move()
+    {
         float h = Input.GetAxisRaw("Horizontal");
         if ((isTouchRight && h == 1) || (isTouchLeft && h == -1))               //경계값을 넘지 못하도록 고정
             h = 0;
@@ -64,35 +64,43 @@ public class Player : MonoBehaviour
         }
     }
     void Fire()
-	{
+    {
         if (!Input.GetButton("Fire1"))
             return;
 
         if (curShotDelay < maxShotDelay)
             return;
 
-        switch(power)
-		{
+        switch (power)
+        {
             case 1:
                 // Power one
-                GameObject bullet = Instantiate(bulletObjA, transform.position, transform.rotation);
+                GameObject bullet = objectManager.MakeObj("BulletPlayerA");
+                bullet.transform.position = transform.position;
                 Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
                 rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 break;
             case 2:
-                GameObject bulletR = Instantiate(bulletObjA, transform.position+Vector3.right*0.1f, transform.rotation);
-                GameObject bulletL = Instantiate(bulletObjA, transform.position + Vector3.left * 0.1f, transform.rotation);
+                GameObject bulletR = objectManager.MakeObj("BulletPlayerA");
+                bulletR.transform.position = transform.position + Vector3.right * 0.1f;
+
+                GameObject bulletL = objectManager.MakeObj("BulletPlayerA");
+                bulletL.transform.position = transform.position + Vector3.left * 0.1f;
 
                 Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>();
                 Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>();
-
                 rigidR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 rigidL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 break;
             case 3:
-                GameObject bulletR2 = Instantiate(bulletObjA, transform.position + Vector3.right * 0.35f, transform.rotation);
-                GameObject bulletC2 = Instantiate(bulletObjB, transform.position, transform.rotation);
-                GameObject bulletL2 = Instantiate(bulletObjA, transform.position + Vector3.left * 0.35f, transform.rotation);
+                GameObject bulletR2 = objectManager.MakeObj("BulletPlayerA");
+                bulletR2.transform.position = transform.position + Vector3.right * 0.35f;
+
+                GameObject bulletC2 = objectManager.MakeObj("BulletPlayerB");
+                bulletC2.transform.position = transform.position;
+
+                GameObject bulletL2 = objectManager.MakeObj("BulletPlayerA");
+                bulletL2.transform.position = transform.position + Vector3.left * 0.35f;
 
                 Rigidbody2D rigidR2 = bulletR2.GetComponent<Rigidbody2D>();
                 Rigidbody2D rigidC2 = bulletC2.GetComponent<Rigidbody2D>();
@@ -103,8 +111,11 @@ public class Player : MonoBehaviour
                 rigidL2.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 break;
             case 4:
-                GameObject bulletR3 = Instantiate(bulletObjB, transform.position + Vector3.right * 0.3f, transform.rotation);
-                GameObject bulletL3 = Instantiate(bulletObjB, transform.position + Vector3.left * 0.3f, transform.rotation);
+                GameObject bulletR3 = objectManager.MakeObj("BulletPlayerB");
+                bulletR3.transform.position = transform.position + Vector3.right * 0.3f;
+
+                GameObject bulletL3 = objectManager.MakeObj("BulletPlayerB");
+                bulletL3.transform.position = transform.position + Vector3.left * 0.3f;
 
                 Rigidbody2D rigidR3 = bulletR3.GetComponent<Rigidbody2D>();
                 Rigidbody2D rigidL3 = bulletL3.GetComponent<Rigidbody2D>();
@@ -114,13 +125,11 @@ public class Player : MonoBehaviour
                 break;
 
         }
-       
-
         curShotDelay = 0;
-	}
+    }
 
     void Boom()
-	{
+    {
         if (!Input.GetButton("Fire2"))
             return;
 
@@ -130,9 +139,9 @@ public class Player : MonoBehaviour
         if (boom == 0)
             return;
 
-        boom --;
+        boom--;
         isBoomTime = true;
-        manager.UpdateBoomIcon(boom);
+        gameManager.UpdateBoomIcon(boom);
 
         //Effect Visiable
         boomEffect.SetActive(true);
@@ -150,21 +159,21 @@ public class Player : MonoBehaviour
         GameObject[] bullets = GameObject.FindGameObjectsWithTag("Enemy_Bullet");
         for (int index = 0; index < bullets.Length; index++)
         {
-            Destroy(bullets[index]);
+            bullets[index].SetActive(false);
         }
     }
 
     void Reload()
-	{
+    {
         curShotDelay += Time.deltaTime;
-	}
+    }
 
-	void OnTriggerEnter2D(Collider2D collision)
-	{
-		if(collision.gameObject.tag == "Border")
-		{
-            switch(collision.gameObject.name)
-			{
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Border")
+        {
+            switch (collision.gameObject.name)
+            {
                 case "Top":
                     isTouchTop = true;
                     break;
@@ -178,33 +187,33 @@ public class Player : MonoBehaviour
                     isTouchLeft = true;
                     break;
             }
-		}
-        else if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Enemy_Bullet")
-		{
+        }
+        else if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Enemy_Bullet")
+        {
             if (isHit)
                 return;
             //주석
             isHit = true;
             life--;
-            manager.UpdateLifeIcon(life);
+            gameManager.UpdateLifeIcon(life);
 
-            if(life == 0)
-			{
-                manager.gameOver();
-			}
-			else
-			{
-                manager.RespawnPlayer();
+            if (life == 0)
+            {
+                gameManager.gameOver();
+            }
+            else
+            {
+                gameManager.RespawnPlayer();
             }
 
             gameObject.SetActive(false);
-            Destroy(collision.gameObject);
-		}
-        else if(collision.gameObject.tag == "Item")
-		{
+            collision.gameObject.SetActive(false);
+        }
+        else if (collision.gameObject.tag == "Item")
+        {
             Item item = collision.gameObject.GetComponent<Item>();
             switch (item.type)
-			{
+            {
                 case "Coin":
                     score += 1000;
                     break;
@@ -219,19 +228,19 @@ public class Player : MonoBehaviour
                         score += 500;
                     else
                         boom++;
-                        manager.UpdateBoomIcon(boom);
+                    gameManager.UpdateBoomIcon(boom);
                     break;
-			}
-            Destroy(collision.gameObject);
-		}
-	}
+            }
+            collision.gameObject.SetActive(false);
+        }
+    }
     void OffBoomEffect()
-	{
+    {
         boomEffect.SetActive(false);
         isBoomTime = false;
-	}
-	void OnTriggerExit2D(Collider2D collision)
-	{
+    }
+    void OnTriggerExit2D(Collider2D collision)
+    {
         if (collision.gameObject.tag == "Border")
         {
             switch (collision.gameObject.name)

@@ -20,9 +20,10 @@ public class Enemy : MonoBehaviour
     public GameObject itemBoom;
     public GameObject itemPower;
     public GameObject player;
+    public ObjectManager objectManager;
 
     void Awake()
-	{
+    {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -37,9 +38,11 @@ public class Enemy : MonoBehaviour
         if (curShotDelay < maxShotDelay)
             return;
 
-        if(enemyName == "S")
-		{
-            GameObject bullet = Instantiate(bulletObjA, transform.position, transform.rotation);
+        if (enemyName == "S")
+        {
+            GameObject bullet = objectManager.MakeObj("BulletEnemyA");
+            bullet.transform.position = transform.position;
+
             Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
             Vector3 dirVec = player.transform.position - transform.position;
             rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
@@ -47,8 +50,11 @@ public class Enemy : MonoBehaviour
 
         if (enemyName == "L")
         {
-            GameObject bulletR = Instantiate(bulletObjB, transform.position + Vector3.right*0.3f, transform.rotation);
-            GameObject bulletL = Instantiate(bulletObjB, transform.position + Vector3.left * 0.3f, transform.rotation);
+            GameObject bulletR = objectManager.MakeObj("BulletEnemyB");
+            bulletR.transform.position = transform.position + Vector3.right * 0.3f;
+
+            GameObject bulletL = objectManager.MakeObj("BulletEnemyB");
+            bulletL.transform.position = transform.position + Vector3.left * 0.3f;
 
             Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>();
             Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>();
@@ -68,8 +74,8 @@ public class Enemy : MonoBehaviour
         curShotDelay += Time.deltaTime;
     }
 
-   public void OnHit(int dmg)
-	{
+    public void OnHit(int dmg)
+    {
         if (health <= 0)             //예외처리
             return;
 
@@ -78,7 +84,7 @@ public class Enemy : MonoBehaviour
         Invoke("ReturnSprite", 0.1f);
 
         if (health <= 0)
-		{
+        {
             Player playerLogic = player.GetComponent<Player>();
             playerLogic.score += enemyScore;
 
@@ -86,41 +92,54 @@ public class Enemy : MonoBehaviour
             int ran = Random.Range(0, 10);
 
             if (ran < 3)        //30%
-			{
+            {
                 Debug.Log("Not Item");
             }
-           else if(ran < 6)     //Coin  30%
-			{
-                Instantiate(itemCoin, transform.position, itemCoin.transform.rotation);
-			}
+            else if (ran < 6)     //Coin  30%
+            {
+                GameObject itemCoin = objectManager.MakeObj("ItemCoin");
+                itemCoin.transform.position = transform.position;
+                Rigidbody2D rigid = itemCoin.GetComponent<Rigidbody2D>();
+                rigid.velocity = Vector2.down * 1.5f;
+            }
             else if (ran < 8)       //Power     20%
             {
-                Instantiate(itemPower, transform.position, itemPower.transform.rotation);
+                GameObject itemPower = objectManager.MakeObj("ItemPower");
+                itemPower.transform.position = transform.position;
+                Rigidbody2D rigid = itemPower.GetComponent<Rigidbody2D>();
+                rigid.velocity = Vector2.down * 1.5f;
             }
             else if (ran < 10)      //Boom      20%
             {
-                Instantiate(itemBoom, transform.position, itemBoom.transform.rotation);
+                GameObject itemBoom = objectManager.MakeObj("ItemBoom");
+                itemBoom.transform.position = transform.position;
+                Rigidbody2D rigid = itemBoom.GetComponent<Rigidbody2D>();
+                rigid.velocity = Vector2.down * 1.5f;
             }
-            Destroy(gameObject);
-        }   
-	}
+            gameObject.SetActive(false);
+            transform.rotation = Quaternion.identity;
+        }
+    }
 
     void ReturnSprite()
-	{
+    {
         spriteRenderer.sprite = sprites[0];
-	}
+    }
 
-     void OnTriggerEnter2D(Collider2D collision)
-	{
+    void OnTriggerEnter2D(Collider2D collision)
+    {
         if (collision.gameObject.tag == "BorderBullet")
-            Destroy(gameObject);
+		{
+            gameObject.SetActive(false);
+            transform.rotation = Quaternion.identity;
+        }
 
         else if (collision.gameObject.tag == "Player_Bullet")
         {
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
             OnHit(bullet.dmg);
 
-            Destroy(collision.gameObject);
-        }  
+            collision.gameObject.SetActive(false);
+        }
     }
 }
