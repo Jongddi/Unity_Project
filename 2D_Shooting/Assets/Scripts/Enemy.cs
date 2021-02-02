@@ -27,7 +27,23 @@ public class Enemy : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    void Update()
+    void OnEnable()
+	{
+		switch (enemyName)
+		{
+            case "L":
+                health = 40;
+                break;
+            case "M":
+                health = 15;
+                break;
+            case "S":
+                health = 5;
+                break;
+		}
+	}
+
+	void Update()
     {
         Fire();
         Reload();
@@ -99,22 +115,16 @@ public class Enemy : MonoBehaviour
             {
                 GameObject itemCoin = objectManager.MakeObj("ItemCoin");
                 itemCoin.transform.position = transform.position;
-                Rigidbody2D rigid = itemCoin.GetComponent<Rigidbody2D>();
-                rigid.velocity = Vector2.down * 1.5f;
             }
             else if (ran < 8)       //Power     20%
             {
                 GameObject itemPower = objectManager.MakeObj("ItemPower");
                 itemPower.transform.position = transform.position;
-                Rigidbody2D rigid = itemPower.GetComponent<Rigidbody2D>();
-                rigid.velocity = Vector2.down * 1.5f;
             }
             else if (ran < 10)      //Boom      20%
             {
                 GameObject itemBoom = objectManager.MakeObj("ItemBoom");
                 itemBoom.transform.position = transform.position;
-                Rigidbody2D rigid = itemBoom.GetComponent<Rigidbody2D>();
-                rigid.velocity = Vector2.down * 1.5f;
             }
             gameObject.SetActive(false);
             transform.rotation = Quaternion.identity;

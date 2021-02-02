@@ -148,18 +148,50 @@ public class Player : MonoBehaviour
         Invoke("OffBoomEffect", 4f);
 
         //Remove Enemy
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        for (int index = 0; index < enemies.Length; index++)
+        GameObject[] enemiesL = objectManager.GetPool("EnemyL");
+        GameObject[] enemiesM = objectManager.GetPool("EnemyM");
+        GameObject[] enemiesS = objectManager.GetPool("EnemyS");
+        for (int index = 0; index < enemiesL.Length; index++)
         {
-            Enemy enemyLogic = enemies[index].GetComponent<Enemy>();
-            enemyLogic.OnHit(1000);
+			if (enemiesL[index].activeSelf)
+			{
+                Enemy enemyLogic = enemiesL[index].GetComponent<Enemy>();
+                enemyLogic.OnHit(1000);
+            }
+        }
+        for (int index = 0; index < enemiesM.Length; index++)
+        {
+            if (enemiesM[index].activeSelf)
+            {
+                Enemy enemyLogic = enemiesM[index].GetComponent<Enemy>();
+                enemyLogic.OnHit(1000);
+            }
+        }
+        for (int index = 0; index < enemiesS.Length; index++)
+        {
+            if (enemiesS[index].activeSelf)
+            {
+                Enemy enemyLogic = enemiesS[index].GetComponent<Enemy>();
+                enemyLogic.OnHit(1000);
+            }
         }
 
         //Remove Enemy Bullet
-        GameObject[] bullets = GameObject.FindGameObjectsWithTag("Enemy_Bullet");
-        for (int index = 0; index < bullets.Length; index++)
+        GameObject[] bulletsA = objectManager.GetPool("BulletEnemyA");
+        GameObject[] bulletsB = objectManager.GetPool("BulletEnemyB");
+        for (int index = 0; index < bulletsA.Length; index++)
         {
-            bullets[index].SetActive(false);
+            if (bulletsA[index].activeSelf)
+			{
+                bulletsA[index].SetActive(false);
+            }
+        }
+        for (int index = 0; index < bulletsB.Length; index++)
+        {
+            if (bulletsB[index].activeSelf)
+            {
+                bulletsB[index].SetActive(false);
+            }
         }
     }
 
