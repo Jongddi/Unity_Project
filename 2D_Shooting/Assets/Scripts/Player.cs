@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     public GameObject bulletObjA;
     public GameObject bulletObjB;
     public GameObject boomEffect;
+    public GameObject[] Followers;
 
     public GameManager gameManager;
     public ObjectManager objectManager;
@@ -110,7 +111,7 @@ public class Player : MonoBehaviour
                 rigidC2.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 rigidL2.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 break;
-            case 4:
+            default:
                 GameObject bulletR3 = objectManager.MakeObj("BulletPlayerB");
                 bulletR3.transform.position = transform.position + Vector3.right * 0.3f;
 
@@ -253,7 +254,10 @@ public class Player : MonoBehaviour
                     if (power == maxPower)
                         score += 500;
                     else
+					{
                         power++;
+                        AddFollower();
+                    }
                     break;
                 case "Boom":
                     if (boom == maxBoom)
@@ -265,6 +269,17 @@ public class Player : MonoBehaviour
             }
             collision.gameObject.SetActive(false);
         }
+    }
+
+    void AddFollower() 
+    {
+        if (power == 4)
+            Followers[0].SetActive(true);
+        else if (power == 5)
+            Followers[1].SetActive(true);
+        else if (power == 6)
+            Followers[2].SetActive(true);
+
     }
     void OffBoomEffect()
     {
