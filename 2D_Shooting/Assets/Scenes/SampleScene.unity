@@ -280,6 +280,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f2aaecc3b979544abb9e78db84f1a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyBPrefab: {fileID: 3299089243189800486, guid: 4d34ee971f24dd24a89ee91c27eaf0df,
+    type: 3}
   enemyLPrefab: {fileID: 5703891652033827912, guid: b4132d1bc36398740919df539a067646,
     type: 3}
   enemyMPrefab: {fileID: 140535833691844072, guid: e03c63b6f28ed764a9ea01a90b1e1b8f,
@@ -301,6 +303,10 @@ MonoBehaviour:
   bulletEnemyBPrefab: {fileID: 5221463735403976447, guid: 0e7fdba36d519164fb4566d2544ae737,
     type: 3}
   bulletFollowerPrefab: {fileID: 7231147562283172104, guid: 83a88e4d1e03f1e4496cbe0ea5767484,
+    type: 3}
+  bulletBossAPrefab: {fileID: 5221463735403976447, guid: 0c0e74a0b49e2e947915cfc2c14efc48,
+    type: 3}
+  bulletBossBPrefab: {fileID: 5221463735403976447, guid: 5eecaa7172f755c48998474041fa63ab,
     type: 3}
 --- !u!4 &122070582
 Transform:

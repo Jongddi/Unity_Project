@@ -238,7 +238,6 @@ public class Player : MonoBehaviour
             {
                 gameManager.RespawnPlayer();
             }
-
             gameObject.SetActive(false);
             collision.gameObject.SetActive(false);
         }
