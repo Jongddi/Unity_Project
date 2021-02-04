@@ -157,7 +157,7 @@ MonoBehaviour:
   enemyName: B
   enemyScore: 5000
   speed: 1.5
-  health: 3000
+  health: 2000
   sprites: []
   maxShotDelay: 0
   curShotDelay: 0
@@ -168,6 +168,7 @@ MonoBehaviour:
   itemPower: {fileID: 0}
   player: {fileID: 0}
   objectManager: {fileID: 0}
+  gameManager: {fileID: 0}
   patternIndex: -1
   curPatternCount: 0
   maxPatternCount: 0200000003000000830000000f000000
