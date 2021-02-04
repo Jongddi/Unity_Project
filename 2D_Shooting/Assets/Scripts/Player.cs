@@ -30,11 +30,49 @@ public class Player : MonoBehaviour
     public bool isHit;
     public bool isBoomTime;
     Animator anim;
+    SpriteRenderer spriteRenderer;
+
+    public bool isRespawnTime;
+
+    public bool[] joyControl;
+    public bool isControl;
+    public bool isButtonA;
+    public bool isButtonB;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
+
+	void OnEnable()
+	{
+        Unbeatable();
+        Invoke("Unbeatable",3);
+	}
+
+    void Unbeatable()
+	{
+        isRespawnTime = !isRespawnTime;
+        if (isRespawnTime)                      //무적 타임 이펙트(투명화)
+		{
+            spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+
+            for(int index = 0; index<Followers.Length; index++)
+			{
+                Followers[index].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+			}
+        }
+		else
+        { 
+            spriteRenderer.color = new Color(1, 1, 1, 1);                       //무적시간 종료
+
+            for (int index = 0; index < Followers.Length; index++)
+            {
+                Followers[index].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+            }
+        }
+	}
 
     void Update()
     {
@@ -44,14 +82,45 @@ public class Player : MonoBehaviour
         Boom();
     }
 
+    public void JoyPanel(int type)
+	{
+        for(int index=0; index < 9; index++)
+		{
+            joyControl[index] = index == type;
+		}
+	}
+
+    public void Joydown()
+    {
+        isControl = true;
+    }
+
+    public void JoyUp()
+	{
+        isControl = false;
+	}
+
     void Move()
     {
+        //Keyboard
         float h = Input.GetAxisRaw("Horizontal");
-        if ((isTouchRight && h == 1) || (isTouchLeft && h == -1))               //경계값을 넘지 못하도록 고정
+        float v = Input.GetAxisRaw("Vertical");
+
+        //JoyControl
+        if(joyControl[0]){    h = -1;    v = 1;  }
+        if(joyControl[1]){    h = 0;    v = 1;  }
+        if(joyControl[2]){    h = 1;    v = 1;  }
+        if(joyControl[3]){    h = -1;    v = 0;  }
+        if(joyControl[4]){    h = 0;    v = 0;  }
+        if(joyControl[5]){    h = 1;    v = 0;  }
+        if(joyControl[6]){    h = -1;    v = -1;  }
+        if(joyControl[7]){    h = 0;    v = -1;  }
+        if(joyControl[8]){    h = 1;    v = -1;  }
+
+        if ((isTouchRight && h == 1) || (isTouchLeft && h == -1) || !isControl)               //경계값을 넘지 못하도록 고정
             h = 0;
 
-        float v = Input.GetAxisRaw("Vertical");
-        if ((isTouchTop && v == 1) || (isTouchBottom && v == -1))
+        if ((isTouchTop && v == 1) || (isTouchBottom && v == -1) || !isControl)
             v = 0;
 
         Vector3 curPos = transform.position;
@@ -64,9 +133,26 @@ public class Player : MonoBehaviour
             anim.SetInteger("Input", (int)h);
         }
     }
+
+    public void ButtonADown()
+	{
+        isButtonA = true;
+	}
+    public void ButtonAUP()
+    {
+        isButtonA = false;
+    }
+    public void ButtonBDown()
+    {
+        isButtonB = true;
+    }
+
     void Fire()
     {
-        if (!Input.GetButton("Fire1"))
+        //if (!Input.GetButton("Fire1"))
+        //  return;
+
+        if (!isButtonA)
             return;
 
         if (curShotDelay < maxShotDelay)
@@ -131,7 +217,10 @@ public class Player : MonoBehaviour
 
     void Boom()
     {
-        if (!Input.GetButton("Fire2"))
+        // if (!Input.GetButton("Fire2"))
+        //     return;
+
+        if (!isButtonB)
             return;
 
         if (isBoomTime)
@@ -141,6 +230,7 @@ public class Player : MonoBehaviour
             return;
 
         boom--;
+        isButtonB = false;
         isBoomTime = true;
         gameManager.UpdateBoomIcon(boom);
 
@@ -223,12 +313,16 @@ public class Player : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Enemy_Bullet")
         {
+            if (isRespawnTime)
+                return;
+
             if (isHit)
                 return;
             //주석
             isHit = true;
             life--;
             gameManager.UpdateLifeIcon(life);
+            gameManager.CallExplosion(transform.position, "P");
 
             if (life == 0)
             {
@@ -239,6 +333,21 @@ public class Player : MonoBehaviour
                 gameManager.RespawnPlayer();
             }
             gameObject.SetActive(false);
+
+            //플레이어와 보스가 충돌했을 때 보스가 사라지지 않도록 하는 함수
+            if (collision.gameObject.tag == "Enemy")
+            {
+                GameObject bossEnemy = collision.gameObject;
+                Enemy enemyBoss = bossEnemy.GetComponent<Enemy>();
+                if (enemyBoss.enemyName == "B")
+                {
+                    return;
+                }
+                else
+                {
+                    collision.gameObject.SetActive(false);
+                }
+            }
             collision.gameObject.SetActive(false);
         }
         else if (collision.gameObject.tag == "Item")

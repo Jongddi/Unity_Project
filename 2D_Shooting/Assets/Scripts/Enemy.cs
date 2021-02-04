@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
     public GameObject itemPower;
     public GameObject player;
     public ObjectManager objectManager;
+    public GameManager gameManager;
 
     public int patternIndex;
     public int curPatternCount;
@@ -42,7 +43,7 @@ public class Enemy : MonoBehaviour
 		switch (enemyName)
 		{
             case "B":
-                health = 300;
+                health = 3000;
                 Invoke("Stop", 2);
                 break;
             case "L":
@@ -307,6 +308,13 @@ public class Enemy : MonoBehaviour
             }
             gameObject.SetActive(false);
             transform.rotation = Quaternion.identity;
+            gameManager.CallExplosion(transform.position, enemyName);
+
+            //Boss Kill
+            if(enemyName == "B")
+			{
+                gameManager.StageEnd();
+			}
         }
     }
 

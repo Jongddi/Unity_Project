@@ -7,6 +7,13 @@ using System.IO;
 
 public class GameManager : MonoBehaviour
 {
+	public int stage;
+	public Animator stageAnim;
+	public Animator clearAnim;
+	public Animator fadeAnim;
+
+	public Transform playerPos;
+
 	public string[] enemyObjs;
 	public Transform[] spawnPoints;
 
@@ -24,11 +31,47 @@ public class GameManager : MonoBehaviour
 	public int spawnIndex;
 	public bool spawnEnd;
 
-	private void Awake()
+	void Awake()
 	{
 		spawnList = new List<Spawn>();
 		enemyObjs = new string[] { "EnemyS", "EnemyM", "EnemyL", "EnemyB" };
+		StageStart();
+	}
+
+	public void StageStart()
+	{
+		//Stage UI Load
+		stageAnim.SetTrigger("On");
+		stageAnim.GetComponent<Text>().text = "STAGE " + stage + "\nSTART";
+		clearAnim.GetComponent<Text>().text = "STAGE " + stage + "\nCLEAR!";
+
+		//Enemy Spawn File Read
 		ReadSpawnFile();
+
+		//Fade In
+		fadeAnim.SetTrigger("In");
+	}
+
+	public void StageEnd()
+	{
+		//Clear UI
+		clearAnim.SetTrigger("On");
+		
+
+		//Fade Out
+		fadeAnim.SetTrigger("Out");
+
+		//Player Repos
+		player.transform.position = playerPos.position;
+
+		//Stage Increament
+		stage++;
+		if(stage <2)
+		{
+			Invoke("gameOver", 6);
+		}
+		else
+			Invoke("StageStart", 5);
 	}
 
 	void ReadSpawnFile()
@@ -39,7 +82,7 @@ public class GameManager : MonoBehaviour
 		spawnEnd = false;
 
 		//리스폰 파일 열기
-		TextAsset textFile = Resources.Load("Stage0") as TextAsset;
+		TextAsset textFile = Resources.Load("Stage"+ stage) as TextAsset;
 		StringReader stringReader = new StringReader(textFile.text);
 
 		while(stringReader != null)
@@ -105,6 +148,7 @@ public class GameManager : MonoBehaviour
 		Enemy enemyLogic = enemy.GetComponent<Enemy>();
 		enemyLogic.player = player;
 		enemyLogic.objectManager = objectManager;
+		enemyLogic.gameManager = this;
 
 		if (enemyPoint == 5 || enemyPoint == 6)             //Right Spawn
 		{
@@ -143,6 +187,15 @@ public class GameManager : MonoBehaviour
 
 		Player playerLogic = player.GetComponent<Player>();
 		playerLogic.isHit = false;
+	}
+
+	public void CallExplosion(Vector3 pos, string type)
+	{
+		GameObject explosion = objectManager.MakeObj("Explosion");
+		Explosion explosionLogic = explosion.GetComponent<Explosion>();
+
+		explosion.transform.position = pos;
+		explosionLogic.StartExplosion(type);
 	}
 
 	public void UpdateLifeIcon(int life)
