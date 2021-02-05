@@ -802,7 +802,7 @@ MonoBehaviour:
   score: 0
   speed: 3
   power: 1
-  maxPower: 6
+  maxPower: 7
   boom: 0
   maxBoom: 3
   maxShotDelay: 0.15
@@ -4181,7 +4181,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 60, y: 60}
+  m_AnchoredPosition: {x: 80, y: 80}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1441538381

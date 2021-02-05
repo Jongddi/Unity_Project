@@ -168,6 +168,7 @@ public class Player : MonoBehaviour
                 rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 break;
             case 2:
+            case 3:
                 GameObject bulletR = objectManager.MakeObj("BulletPlayerA");
                 bulletR.transform.position = transform.position + Vector3.right * 0.1f;
 
@@ -179,7 +180,7 @@ public class Player : MonoBehaviour
                 rigidR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 rigidL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 break;
-            case 3:
+            case 4:
                 GameObject bulletR2 = objectManager.MakeObj("BulletPlayerA");
                 bulletR2.transform.position = transform.position + Vector3.right * 0.35f;
 
@@ -381,11 +382,11 @@ public class Player : MonoBehaviour
 
     void AddFollower() 
     {
-        if (power == 4)
+        if (power == 5)
             Followers[0].SetActive(true);
-        else if (power == 5)
-            Followers[1].SetActive(true);
         else if (power == 6)
+            Followers[1].SetActive(true);
+        else if (power == 7)
             Followers[2].SetActive(true);
 
     }
