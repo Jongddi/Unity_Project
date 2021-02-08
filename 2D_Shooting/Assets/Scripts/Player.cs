@@ -134,14 +134,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ButtonADown()
-	{
-        isButtonA = true;
-	}
-    public void ButtonAUP()
-    {
-        isButtonA = false;
-    }
     public void ButtonBDown()
     {
         isButtonB = true;
@@ -149,13 +141,8 @@ public class Player : MonoBehaviour
 
     void Fire()
     {
-        //if (!Input.GetButton("Fire1"))
-        //  return;
 
-        if (!isButtonA)
-            return;
-
-        if (curShotDelay < maxShotDelay)
+          if (curShotDelay < maxShotDelay)
             return;
 
         switch (power)
@@ -271,6 +258,8 @@ public class Player : MonoBehaviour
         //Remove Enemy Bullet
         GameObject[] bulletsA = objectManager.GetPool("BulletEnemyA");
         GameObject[] bulletsB = objectManager.GetPool("BulletEnemyB");
+        GameObject[] bulletsC = objectManager.GetPool("BulletBossA");
+        GameObject[] bulletsD = objectManager.GetPool("BulletBossB");
         for (int index = 0; index < bulletsA.Length; index++)
         {
             if (bulletsA[index].activeSelf)
@@ -283,6 +272,20 @@ public class Player : MonoBehaviour
             if (bulletsB[index].activeSelf)
             {
                 bulletsB[index].SetActive(false);
+            }
+        }
+        for (int index = 0; index < bulletsC.Length; index++)
+        {
+            if (bulletsC[index].activeSelf)
+            {
+                bulletsC[index].SetActive(false);
+            }
+        }
+        for (int index = 0; index < bulletsD.Length; index++)
+        {
+            if (bulletsD[index].activeSelf)
+            {
+                bulletsD[index].SetActive(false);
             }
         }
     }
