@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1197059475320782294}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.67, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -149,8 +149,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6f446ef1a1fe244aa133673093fe3df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyName: M
   speed: 3
   health: 5
   sprites:
   - {fileID: -7642239419928554605, guid: c50817e3882d5754c8e8a2852b1c3f11, type: 3}
   - {fileID: -7911572535675539837, guid: c50817e3882d5754c8e8a2852b1c3f11, type: 3}
+  maxShotDelay: 0
+  curShotDelay: 0
+  bulletObjA: {fileID: 343941408704060213, guid: a6861892186b38c44a18820f27d16f93,
+    type: 3}
+  bulletObjB: {fileID: 5723711374722952704, guid: 3d88fda48566f064cb06c8a34212779c,
+    type: 3}
+  player: {fileID: 0}

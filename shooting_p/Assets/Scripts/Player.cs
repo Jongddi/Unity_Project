@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public float maxShotDelay;
 
     //Class,GetComponent
+    public GameManager gameManager;
     Animator anim;
 
     //Prefab
@@ -110,6 +111,12 @@ public class Player : MonoBehaviour
                     isTouchLeft = true;
                     break;
             }
+        }
+        else if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
+        {
+            gameManager.RespawnPlayer();
+            gameObject.SetActive(false);
+            Destroy(collision.gameObject);
         }
     }
     void OnTriggerExit2D(Collider2D collision)

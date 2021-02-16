@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 347942388}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -423,6 +423,7 @@ MonoBehaviour:
   power: 1
   curShotDelay: 0
   maxShotDelay: 0.15
+  gameManager: {fileID: 1426913404}
   bulletObjA: {fileID: 7349606017016217134, guid: 238c40e88d3ea0a41b4d8a54bd2f9cd1,
     type: 3}
   bulletObjB: {fileID: 7349606017016217134, guid: 86420e313f02e3d469d0e13c0460d7b1,
@@ -1161,6 +1162,7 @@ MonoBehaviour:
   - {fileID: 1515147761}
   maxSpawnDelay: 0
   curSpawnDelay: 0
+  player: {fileID: 347942382}
 --- !u!4 &1426913405
 Transform:
   m_ObjectHideFlags: 0
