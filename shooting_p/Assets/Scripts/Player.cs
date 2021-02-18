@@ -15,18 +15,19 @@ public class Player : MonoBehaviour
     //Int
     public int life;
     public int score;
-
-    //Float
-    public float speed;
     public int power;
     public int maxPower;
     public int boom;
     public int maxBoom;
+
+    //Float
+    public float speed;
     public float curShotDelay;
     public float maxShotDelay;
 
     //Class,GetComponent
     public GameManager gameManager;
+    public ObjectManager objectManager;
     Animator anim;
 
     //Prefab
@@ -76,22 +77,36 @@ public class Player : MonoBehaviour
         switch(power)               //플레이어의 강화단계에 따라 총알 오브젝트의 포지션,로테이션 변동
 		{
             case 1:
-                GameObject bullet = Instantiate(bulletObjA, transform.position, transform.rotation);                //Instantiate(복제할 오브젝트 ,생성될 위치 ,생성될 방향)
+                GameObject bullet = objectManager.MakeObj("PlayerBulletA");
+                bullet.transform.position = transform.position;
                 Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();                                                     //총알 오브젝트의 리지드바디호출
                 rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);                                                          //AddForce(힘을받아 날아갈 방향*속도, 힘의 정도) impulse = 순간적인 힘 == 한번 받은 힘에 의해 일정한 속도로 고정
                 break;
             case 2:
-                GameObject bulletR= Instantiate(bulletObjA, transform.position+Vector3.right * 0.1f, transform.rotation);
-                GameObject bulletL= Instantiate(bulletObjA, transform.position+ Vector3.left * 0.1f, transform.rotation);
+                GameObject bulletR = objectManager.MakeObj("PlayerBulletA");
+                bulletR.transform.position= transform.position + Vector3.right * 0.1f;
+                GameObject bulletL= objectManager.MakeObj("PlayerBulletA");
+                bulletL.transform.position = transform.position + Vector3.left * 0.1f;
                 Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>();
                 Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>();
                 rigidR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 rigidL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 break;
             case 3:
-                GameObject bulletB = Instantiate(bulletObjB, transform.position, transform.rotation);
+                GameObject bulletB = objectManager.MakeObj("PlayerBulletB");
+                bulletB.transform.position = transform.position;
                 Rigidbody2D rigidB = bulletB.GetComponent<Rigidbody2D>();
                 rigidB.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                break;
+            case 4:
+                GameObject bulletR2 = objectManager.MakeObj("PlayerBulletB");
+                GameObject bulletL2 = objectManager.MakeObj("PlayerBulletB");
+                bulletR2.transform.position = transform.position + Vector3.right * 0.25f;
+                bulletL2.transform.position = transform.position + Vector3.left * 0.25f;
+                Rigidbody2D rigidR2 = bulletR2.GetComponent<Rigidbody2D>();
+                Rigidbody2D rigidL2 = bulletL2.GetComponent<Rigidbody2D>();
+                rigidR2.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                rigidL2.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 break;
         }
 
@@ -101,7 +116,7 @@ public class Player : MonoBehaviour
     void Boom()
 	{
         if (!Input.GetButton("Fire2"))
-        return;
+            return;
 
         if (isBoomTime)
             return;
@@ -118,18 +133,54 @@ public class Player : MonoBehaviour
         Invoke("OffBoomEffect", 4f);
 
         //필살기발동시 적 제거, 총알제거
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        for (int index = 0; index < enemies.Length; index++)
+        GameObject[] enemiesL = objectManager.GetPool("EnemyL");
+        GameObject[] enemiesM = objectManager.GetPool("EnemyM");
+        GameObject[] enemiesS = objectManager.GetPool("EnemyS");
+        for (int index = 0; index < enemiesL.Length; index++)
         {
-            Enemy enemyLogic = enemies[index].GetComponent<Enemy>();
-            enemyLogic.OnHit(1000);
+            if (enemiesL[index].activeSelf)
+            {
+                Enemy enemyLogic = enemiesL[index].GetComponent<Enemy>();
+                enemyLogic.OnHit(1000);
+            }
+        }
+
+        for (int index = 0; index < enemiesM.Length; index++)
+        {
+            if (enemiesM[index].activeSelf)
+            {
+                Enemy enemyLogic = enemiesM[index].GetComponent<Enemy>();
+                enemyLogic.OnHit(1000);
+            }
+        }
+
+        for (int index = 0; index < enemiesS.Length; index++)
+        {
+            if (enemiesS[index].activeSelf)
+            {
+                Enemy enemyLogic = enemiesS[index].GetComponent<Enemy>();
+                enemyLogic.OnHit(1000);
+            }
         }
 
         //Remove Enemy Bullet
-        GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
-        for (int index = 0; index < bullets.Length; index++)
+        GameObject[] bulletsA = objectManager.GetPool("EnemyBulletA");
+        GameObject[] bulletsB = objectManager.GetPool("EnemyBulletB");
+
+        for (int index = 0; index < bulletsA.Length; index++)
         {
-            Destroy(bullets[index]);
+            if (bulletsA[index].activeSelf)
+			{
+                bulletsA[index].SetActive(false);
+            }
+        }
+
+        for (int index = 0; index < bulletsB.Length; index++)
+        {
+            if (bulletsB[index].activeSelf)
+            {
+                bulletsB[index].SetActive(false);
+            }
         }
     }
 
@@ -177,7 +228,7 @@ public class Player : MonoBehaviour
             }
 
             gameObject.SetActive(false);
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
         }
 
         else if (collision.gameObject.tag == "Item")
@@ -202,7 +253,7 @@ public class Player : MonoBehaviour
                     gameManager.UpdateBoomIcon(boom);
                     break;
             }
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
         }
     }
 

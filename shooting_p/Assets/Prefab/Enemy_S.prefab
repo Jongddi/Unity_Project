@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: S
-  enemyScore: 25
+  enemyScore: 100
   speed: 1
   health: 5
   sprites:
@@ -154,3 +154,4 @@ MonoBehaviour:
   itemPower: {fileID: 2819238968174208828, guid: 3b342f8c950998e4b8655d9886225ce1,
     type: 3}
   player: {fileID: 0}
+  objectManager: {fileID: 0}
