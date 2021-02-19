@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
     public GameObject bulletObjA;
     public GameObject bulletObjB;
     public GameObject boomEffect;
+    public GameObject[] Followers;
 
     void Awake()        //프로그램 실행 전 다른 클래스에서 오는 컴포넌트 초기화
     {
@@ -99,6 +100,8 @@ public class Player : MonoBehaviour
                 rigidB.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 break;
             case 4:
+            case 5:
+            case 6:
                 GameObject bulletR2 = objectManager.MakeObj("PlayerBulletB");
                 GameObject bulletL2 = objectManager.MakeObj("PlayerBulletB");
                 bulletR2.transform.position = transform.position + Vector3.right * 0.25f;
@@ -242,19 +245,31 @@ public class Player : MonoBehaviour
                 case "Power":
                     if (power == maxPower)
                         score += 500;
-                    else
+					else
+					{
                         power++;
+                        AddFollower();
+                    }
                     break;
                 case "Boom":
                     if (boom == maxBoom)
                         score += 500;
                     else
                         boom++;
-                    gameManager.UpdateBoomIcon(boom);
-                    break;
+                    gameManager.UpdateBoomIcon(boom);                    break;
             }
             collision.gameObject.SetActive(false);
         }
+    }
+
+    void AddFollower()
+    {
+        if (power == 4)
+            Followers[0].SetActive(true);
+        else if (power == 5)
+            Followers[1].SetActive(true);
+        else if (power == 6)
+            Followers[2].SetActive(true);
     }
 
     void OffBoomEffect()

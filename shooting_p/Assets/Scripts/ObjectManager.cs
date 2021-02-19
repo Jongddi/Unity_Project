@@ -15,6 +15,7 @@ public class ObjectManager : MonoBehaviour
 	public GameObject itemCoinPrefab;
 	public GameObject itemPowerPrefab;
 	public GameObject itemBoomPrefab;
+	public GameObject followerBulletPrefab;
 
 	//Array
 	GameObject[] enemyL;		//Enemy
@@ -29,6 +30,7 @@ public class ObjectManager : MonoBehaviour
 	GameObject[] playerBulletB;
 	GameObject[] enemyBulletA;
 	GameObject[] enemyBulletB;
+	GameObject[] followerBullet;
 
 	GameObject[] targetPool;        //Pooling
 
@@ -47,6 +49,7 @@ public class ObjectManager : MonoBehaviour
 		playerBulletB = new GameObject[100];
 		enemyBulletA = new GameObject[100];
 		enemyBulletB = new GameObject[100];
+		followerBullet = new GameObject[100];
 
 		Generate();
 	}
@@ -115,6 +118,12 @@ public class ObjectManager : MonoBehaviour
 			enemyBulletB[index] = Instantiate(enemyBulletBPrefab);
 			enemyBulletB[index].SetActive(false);
 		}
+
+		for (int index = 0; index < followerBullet.Length; index++)
+		{
+			followerBullet[index] = Instantiate(followerBulletPrefab);
+			followerBullet[index].SetActive(false);
+		}
 	}
 
 	public GameObject MakeObj(string type)
@@ -159,6 +168,10 @@ public class ObjectManager : MonoBehaviour
 
 			case "EnemyBulletB":
 				targetPool = enemyBulletB;
+				break;
+
+			case "FollowerBullet":
+				targetPool = followerBullet;
 				break;
 		}
 
@@ -214,6 +227,10 @@ public class ObjectManager : MonoBehaviour
 
 			case "EnemyBulletB":
 				targetPool = enemyBulletB;
+				break;
+
+			case "FollowerBullet":
+				targetPool = followerBullet;
 				break;
 		}
 		return targetPool;
