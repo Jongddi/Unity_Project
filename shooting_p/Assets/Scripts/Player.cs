@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public bool isTouchLeft;
     public bool isHit;
     public bool isBoomTime;
+    public bool isRespawnTime;
 
     //Int
     public int life;
@@ -29,6 +30,7 @@ public class Player : MonoBehaviour
     public GameManager gameManager;
     public ObjectManager objectManager;
     Animator anim;
+    SpriteRenderer spriteRenderer;
 
     //Prefab
     public GameObject bulletObjA;
@@ -39,6 +41,36 @@ public class Player : MonoBehaviour
     void Awake()        //프로그램 실행 전 다른 클래스에서 오는 컴포넌트 초기화
     {
         anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    void OnEnable()
+    {
+        Unbeatable();
+        Invoke("Unbeatable", 3);
+    }
+
+    void Unbeatable()
+    {
+        isRespawnTime = !isRespawnTime;
+        if (isRespawnTime)                      //무적 타임 이펙트(투명화)
+        {
+            spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+
+            for (int index = 0; index < Followers.Length; index++)
+            {
+                Followers[index].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+            }
+        }
+        else
+        {
+            spriteRenderer.color = new Color(1, 1, 1, 1);                       //무적시간 종료
+
+            for (int index = 0; index < Followers.Length; index++)
+            {
+                Followers[index].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+            }
+        }
     }
 
     void Update()       //초당 N회 실행
@@ -135,7 +167,7 @@ public class Player : MonoBehaviour
         boomEffect.SetActive(true);
         Invoke("OffBoomEffect", 4f);
 
-        //필살기발동시 적 제거, 총알제거
+        //필살기발동시 적 제거
         GameObject[] enemiesL = objectManager.GetPool("EnemyL");
         GameObject[] enemiesM = objectManager.GetPool("EnemyM");
         GameObject[] enemiesS = objectManager.GetPool("EnemyS");
@@ -169,6 +201,8 @@ public class Player : MonoBehaviour
         //Remove Enemy Bullet
         GameObject[] bulletsA = objectManager.GetPool("EnemyBulletA");
         GameObject[] bulletsB = objectManager.GetPool("EnemyBulletB");
+        GameObject[] bulletsC = objectManager.GetPool("EnemyBulletC");
+        GameObject[] bulletsD = objectManager.GetPool("EnemyBulletD");
 
         for (int index = 0; index < bulletsA.Length; index++)
         {
@@ -183,6 +217,22 @@ public class Player : MonoBehaviour
             if (bulletsB[index].activeSelf)
             {
                 bulletsB[index].SetActive(false);
+            }
+        }
+
+        for (int index = 0; index < bulletsC.Length; index++)
+        {
+            if (bulletsC[index].activeSelf)
+            {
+                bulletsC[index].SetActive(false);
+            }
+        }
+
+        for (int index = 0; index < bulletsD.Length; index++)
+        {
+            if (bulletsD[index].activeSelf)
+            {
+                bulletsD[index].SetActive(false);
             }
         }
     }
@@ -214,6 +264,9 @@ public class Player : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet")
         {
+            if (isRespawnTime)
+                return;
+
             if (isHit)
                 return;
 
@@ -231,6 +284,20 @@ public class Player : MonoBehaviour
             }
 
             gameObject.SetActive(false);
+
+            if (collision.gameObject.tag == "Enemy")
+            {
+                GameObject bossEnemy = collision.gameObject;
+                Enemy enemyBoss = bossEnemy.GetComponent<Enemy>();
+                if (enemyBoss.enemyName == "B")
+                {
+                    return;
+                }
+                else
+                {
+                    collision.gameObject.SetActive(false);
+                }
+            }
             collision.gameObject.SetActive(false);
         }
 

@@ -739,6 +739,7 @@ MonoBehaviour:
   isTouchLeft: 0
   isHit: 0
   isBoomTime: 0
+  isRespawnTime: 0
   life: 3
   score: 0
   power: 1
@@ -2736,6 +2737,7 @@ MonoBehaviour:
   - 
   - 
   - 
+  - 
   spawnPoints:
   - {fileID: 1721117120}
   - {fileID: 987194378}
@@ -2811,9 +2813,15 @@ MonoBehaviour:
     type: 3}
   enemySPrefab: {fileID: 1634250992491699572, guid: 8476941ef5c21c841b937e92c05e3ad4,
     type: 3}
+  enemyBPrefab: {fileID: 8119049167224968654, guid: 6fdedc439e2aec14c919b8878141bb9a,
+    type: 3}
   enemyBulletAPrefab: {fileID: 343941408704060213, guid: a6861892186b38c44a18820f27d16f93,
     type: 3}
   enemyBulletBPrefab: {fileID: 5723711374722952704, guid: 3d88fda48566f064cb06c8a34212779c,
+    type: 3}
+  enemyBulletCPrefab: {fileID: 5723711374722952704, guid: 11d294465bf3d0d45a420e768f2a6e27,
+    type: 3}
+  enemyBulletDPrefab: {fileID: 5723711374722952704, guid: 0446d53be0a95a34682c026506385633,
     type: 3}
   playerBulletAPrefab: {fileID: 7349606017016217134, guid: 238c40e88d3ea0a41b4d8a54bd2f9cd1,
     type: 3}

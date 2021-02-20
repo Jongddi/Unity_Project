@@ -8,8 +8,11 @@ public class ObjectManager : MonoBehaviour
 	public GameObject enemyLPrefab;
 	public GameObject enemyMPrefab;
 	public GameObject enemySPrefab;
+	public GameObject enemyBPrefab;
 	public GameObject enemyBulletAPrefab;
 	public GameObject enemyBulletBPrefab;
+	public GameObject enemyBulletCPrefab;
+	public GameObject enemyBulletDPrefab;
 	public GameObject playerBulletAPrefab;
 	public GameObject playerBulletBPrefab;
 	public GameObject itemCoinPrefab;
@@ -21,6 +24,7 @@ public class ObjectManager : MonoBehaviour
 	GameObject[] enemyL;		//Enemy
 	GameObject[] enemyM;
 	GameObject[] enemyS;
+	GameObject[] enemyB;
 
 	GameObject[] itemCoin;		//Item
 	GameObject[] itemPower;
@@ -30,6 +34,8 @@ public class ObjectManager : MonoBehaviour
 	GameObject[] playerBulletB;
 	GameObject[] enemyBulletA;
 	GameObject[] enemyBulletB;
+	GameObject[] enemyBulletC;
+	GameObject[] enemyBulletD;
 	GameObject[] followerBullet;
 
 	GameObject[] targetPool;        //Pooling
@@ -40,6 +46,7 @@ public class ObjectManager : MonoBehaviour
 		enemyL = new GameObject[10];
 		enemyM = new GameObject[10];
 		enemyS = new GameObject[10];
+		enemyB = new GameObject[1];
 
 		itemCoin = new GameObject[20];
 		itemPower = new GameObject[10];
@@ -49,6 +56,8 @@ public class ObjectManager : MonoBehaviour
 		playerBulletB = new GameObject[100];
 		enemyBulletA = new GameObject[100];
 		enemyBulletB = new GameObject[100];
+		enemyBulletC = new GameObject[50];
+		enemyBulletD = new GameObject[1000];
 		followerBullet = new GameObject[100];
 
 		Generate();
@@ -74,9 +83,14 @@ public class ObjectManager : MonoBehaviour
 			enemyS[index] = Instantiate(enemySPrefab);
 			enemyS[index].SetActive(false);
 		}
+		for (int index = 0; index < enemyB.Length; index++)
+		{
+			enemyB[index] = Instantiate(enemyBPrefab);
+			enemyB[index].SetActive(false);
+		}
 
 		//Item
-		for(int index = 0; index < itemCoin.Length; index++)
+		for (int index = 0; index < itemCoin.Length; index++)
 		{
 			itemCoin[index] = Instantiate(itemCoinPrefab);
 			itemCoin[index].SetActive(false);
@@ -119,6 +133,18 @@ public class ObjectManager : MonoBehaviour
 			enemyBulletB[index].SetActive(false);
 		}
 
+		for (int index = 0; index < enemyBulletC.Length; index++)
+		{
+			enemyBulletC[index] = Instantiate(enemyBulletCPrefab);
+			enemyBulletC[index].SetActive(false);
+		}
+
+		for (int index = 0; index < enemyBulletD.Length; index++)
+		{
+			enemyBulletD[index] = Instantiate(enemyBulletDPrefab);
+			enemyBulletD[index].SetActive(false);
+		}
+
 		for (int index = 0; index < followerBullet.Length; index++)
 		{
 			followerBullet[index] = Instantiate(followerBulletPrefab);
@@ -140,6 +166,10 @@ public class ObjectManager : MonoBehaviour
 
 			case "EnemyS":
 				targetPool = enemyS;
+				break;
+
+			case "EnemyB":
+				targetPool = enemyB;
 				break;
 
 			case "ItemCoin":
@@ -168,6 +198,14 @@ public class ObjectManager : MonoBehaviour
 
 			case "EnemyBulletB":
 				targetPool = enemyBulletB;
+				break;
+
+			case "EnemyBulletC":
+				targetPool = enemyBulletC;
+				break;
+
+			case "EnemyBulletD":
+				targetPool = enemyBulletD;
 				break;
 
 			case "FollowerBullet":
@@ -201,6 +239,10 @@ public class ObjectManager : MonoBehaviour
 				targetPool = enemyS;
 				break;
 
+			case "EnemyB":
+				targetPool = enemyB;
+				break;
+
 			case "ItemCoin":
 				targetPool = itemCoin;
 				break;
@@ -227,6 +269,14 @@ public class ObjectManager : MonoBehaviour
 
 			case "EnemyBulletB":
 				targetPool = enemyBulletB;
+				break;
+
+			case "EnemyBulletC":
+				targetPool = enemyBulletC;
+				break;
+
+			case "EnemyBulletD":
+				targetPool = enemyBulletD;
 				break;
 
 			case "FollowerBullet":
