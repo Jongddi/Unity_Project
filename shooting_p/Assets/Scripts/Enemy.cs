@@ -25,8 +25,9 @@ public class Enemy : MonoBehaviour
     public GameObject itemPower;
     public GameObject player;
     public ObjectManager objectManager;
+    public GameManager gameManager;
 
-	void Awake()
+    void Awake()
 	{
         spriteRenderer = GetComponent<SpriteRenderer>();
         if(enemyName=="B")
@@ -308,6 +309,13 @@ public class Enemy : MonoBehaviour
 
             gameObject.SetActive(false);
             transform.rotation = Quaternion.identity;
+            gameManager.CallExplosion(transform.position, enemyName);
+
+            //Boss Kill
+            if (enemyName == "B")
+            {
+                gameManager.StageEnd();
+            }
         }
 	}
 

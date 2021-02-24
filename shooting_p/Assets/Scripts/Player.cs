@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public bool isHit;
     public bool isBoomTime;
     public bool isRespawnTime;
+    public bool isButtonA;
 
     //Int
     public int life;
@@ -102,6 +103,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void ButtonADown()
+    {
+        isButtonA = true;
+    }
+
     void Fire()
 	{
         if (curShotDelay < maxShotDelay)
@@ -150,7 +156,8 @@ public class Player : MonoBehaviour
 
     void Boom()
 	{
-        if (!Input.GetButton("Fire2"))
+        // if (!Input.GetButton("Fire2"))
+        if (!isButtonA)
             return;
 
         if (isBoomTime)
@@ -160,6 +167,7 @@ public class Player : MonoBehaviour
             return;
 
         boom--;
+        isButtonA = false;
         isBoomTime = true;
         gameManager.UpdateBoomIcon(boom);
 
@@ -273,6 +281,7 @@ public class Player : MonoBehaviour
             isHit = true;
             life--;
             gameManager.UpdateLifeIcon(life);
+            gameManager.CallExplosion(transform.position, "P");
 
             if (life == 0)
             {

@@ -19,6 +19,7 @@ public class ObjectManager : MonoBehaviour
 	public GameObject itemPowerPrefab;
 	public GameObject itemBoomPrefab;
 	public GameObject followerBulletPrefab;
+	public GameObject explosionPrefab;
 
 	//Array
 	GameObject[] enemyL;		//Enemy
@@ -37,6 +38,7 @@ public class ObjectManager : MonoBehaviour
 	GameObject[] enemyBulletC;
 	GameObject[] enemyBulletD;
 	GameObject[] followerBullet;
+	GameObject[] explosion;
 
 	GameObject[] targetPool;        //Pooling
 
@@ -59,6 +61,7 @@ public class ObjectManager : MonoBehaviour
 		enemyBulletC = new GameObject[50];
 		enemyBulletD = new GameObject[1000];
 		followerBullet = new GameObject[100];
+		explosion = new GameObject[20];
 
 		Generate();
 	}
@@ -150,6 +153,13 @@ public class ObjectManager : MonoBehaviour
 			followerBullet[index] = Instantiate(followerBulletPrefab);
 			followerBullet[index].SetActive(false);
 		}
+
+		//폭발애니메이션
+		for (int index = 0; index < explosion.Length; index++)
+		{
+			explosion[index] = Instantiate(explosionPrefab);
+			explosion[index].SetActive(false);
+		}
 	}
 
 	public GameObject MakeObj(string type)
@@ -210,6 +220,10 @@ public class ObjectManager : MonoBehaviour
 
 			case "FollowerBullet":
 				targetPool = followerBullet;
+				break;
+
+			case "Explosion":
+				targetPool = explosion;
 				break;
 		}
 
@@ -281,6 +295,10 @@ public class ObjectManager : MonoBehaviour
 
 			case "FollowerBullet":
 				targetPool = followerBullet;
+				break;
+
+			case "Explosion":
+				targetPool = explosion;
 				break;
 		}
 		return targetPool;
