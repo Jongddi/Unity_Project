@@ -133,14 +133,14 @@ public class Enemy : MonoBehaviour
         //Fireshot Bullet
         if (health <= 0)
             return;
-        for (int index = 0; index < 5; index++)
+        for (int index = 0; index < 10; index++)
         {
             GameObject bullet = objectManager.MakeObj("EnemyBulletB");
             bullet.transform.position = transform.position;
 
             Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
             Vector2 dirVec = player.transform.position - transform.position;
-            Vector2 ranVec = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(0f, 2f));
+            Vector2 ranVec = new Vector2(Random.Range(-2f, 2f), Random.Range(0f, 2f));
             dirVec += ranVec;
             rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
         }
