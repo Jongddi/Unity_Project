@@ -54,7 +54,7 @@ public class ObjectManager : MonoBehaviour
 		itemPower = new GameObject[10];
 		itemBoom = new GameObject[10];
 
-		playerBulletA = new GameObject[100];
+		playerBulletA = new GameObject[1000];
 		playerBulletB = new GameObject[100];
 		enemyBulletA = new GameObject[100];
 		enemyBulletB = new GameObject[100];

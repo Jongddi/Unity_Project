@@ -123,7 +123,7 @@ MonoBehaviour:
   enemyScore: 5000
   patternIndex: -1
   curPatternCount: 0
-  maxPatternCount: 0200000003000000640000000a000000
+  maxPatternCount: 02000000030000002c0100000b000000
   speed: 1.5
   health: 3000
   maxShotDelay: 0
@@ -138,6 +138,7 @@ MonoBehaviour:
   itemPower: {fileID: 0}
   player: {fileID: 0}
   objectManager: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!95 &-344360521063635599
 Animator:
   serializedVersion: 3

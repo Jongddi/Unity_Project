@@ -98,24 +98,24 @@ public class Enemy : MonoBehaviour
             return;
         //Fire 4 bullet Forward
         GameObject bulletR = objectManager.MakeObj("EnemyBulletC");
-        bulletR.transform.position = transform.position + Vector3.right * 0.3f;
+        bulletR.transform.position = transform.position + Vector3.right * 0.4f;
         GameObject bulletR2 = objectManager.MakeObj("EnemyBulletC");
-        bulletR2.transform.position = transform.position + Vector3.right * 0.55f;
+        bulletR2.transform.position = transform.position + Vector3.right * 0.65f;
 
         GameObject bulletL = objectManager.MakeObj("EnemyBulletC");
-        bulletL.transform.position = transform.position + Vector3.left * 0.3f;
+        bulletL.transform.position = transform.position + Vector3.left * 0.4f;
         GameObject bulletL2 = objectManager.MakeObj("EnemyBulletC");
-        bulletL2.transform.position = transform.position + Vector3.left * 0.55f;
+        bulletL2.transform.position = transform.position + Vector3.left * 0.65f;
 
         Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>();
         Rigidbody2D rigidR2 = bulletR2.GetComponent<Rigidbody2D>();
         Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>();
         Rigidbody2D rigidL2 = bulletL2.GetComponent<Rigidbody2D>();
 
-        rigidR.AddForce(Vector2.down * 8, ForceMode2D.Impulse);
-        rigidR2.AddForce(Vector2.down * 8, ForceMode2D.Impulse);
-        rigidL.AddForce(Vector2.down * 8, ForceMode2D.Impulse);
-        rigidL2.AddForce(Vector2.down * 8, ForceMode2D.Impulse);
+        rigidR.AddForce(Vector2.down * 10, ForceMode2D.Impulse);
+        rigidR2.AddForce(Vector2.down * 10, ForceMode2D.Impulse);
+        rigidL.AddForce(Vector2.down * 10, ForceMode2D.Impulse);
+        rigidL2.AddForce(Vector2.down * 10, ForceMode2D.Impulse);
 
         //Pattern Counting
         curPatternCount++;
@@ -197,7 +197,7 @@ public class Enemy : MonoBehaviour
             Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
             Vector2 dirVec = new Vector2(Mathf.Cos(Mathf.PI * 2 * index / roundNum), Mathf.Sin(Mathf.PI * 2 * index / roundNum));
 
-            rigid.AddForce(dirVec.normalized * 2, ForceMode2D.Impulse);
+            rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
 
             Vector3 rotVec = Vector3.forward * 360 * index / roundNum + Vector3.forward * 90;
             bullet.transform.Rotate(rotVec);
