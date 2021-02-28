@@ -30,6 +30,7 @@ public class Explosion : MonoBehaviour
 				transform.localScale = Vector3.one * 0.7f;
 				break;
 			case "M":
+			case "D":
 			case "P":
 				transform.localScale = Vector3.one * 1f;
 				break;

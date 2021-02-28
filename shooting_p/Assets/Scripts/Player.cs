@@ -178,6 +178,7 @@ public class Player : MonoBehaviour
         //필살기발동시 적 제거
         GameObject[] enemiesL = objectManager.GetPool("EnemyL");
         GameObject[] enemiesM = objectManager.GetPool("EnemyM");
+        GameObject[] enemiesD = objectManager.GetPool("EnemyD");
         GameObject[] enemiesS = objectManager.GetPool("EnemyS");
         for (int index = 0; index < enemiesL.Length; index++)
         {
@@ -193,6 +194,15 @@ public class Player : MonoBehaviour
             if (enemiesM[index].activeSelf)
             {
                 Enemy enemyLogic = enemiesM[index].GetComponent<Enemy>();
+                enemyLogic.OnHit(1000);
+            }
+        }
+
+        for (int index = 0; index < enemiesD.Length; index++)
+        {
+            if (enemiesD[index].activeSelf)
+            {
+                Enemy enemyLogic = enemiesD[index].GetComponent<Enemy>();
                 enemyLogic.OnHit(1000);
             }
         }

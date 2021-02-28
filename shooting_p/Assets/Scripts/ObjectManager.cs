@@ -7,6 +7,7 @@ public class ObjectManager : MonoBehaviour
 	//Prefab
 	public GameObject enemyLPrefab;
 	public GameObject enemyMPrefab;
+	public GameObject enemyDPrefab;
 	public GameObject enemySPrefab;
 	public GameObject enemyBPrefab;
 	public GameObject enemyBulletAPrefab;
@@ -24,6 +25,7 @@ public class ObjectManager : MonoBehaviour
 	//Array
 	GameObject[] enemyL;		//Enemy
 	GameObject[] enemyM;
+	GameObject[] enemyD;
 	GameObject[] enemyS;
 	GameObject[] enemyB;
 
@@ -47,6 +49,7 @@ public class ObjectManager : MonoBehaviour
 	{
 		enemyL = new GameObject[10];
 		enemyM = new GameObject[10];
+		enemyD = new GameObject[20];
 		enemyS = new GameObject[10];
 		enemyB = new GameObject[1];
 
@@ -79,6 +82,12 @@ public class ObjectManager : MonoBehaviour
 		{
 			enemyM[index] = Instantiate(enemyMPrefab);
 			enemyM[index].SetActive(false);
+		}
+
+		for (int index = 0; index < enemyD.Length; index++)
+		{
+			enemyD[index] = Instantiate(enemyDPrefab);
+			enemyD[index].SetActive(false);
 		}
 
 		for (int index = 0; index < enemyS.Length; index++)
@@ -174,6 +183,10 @@ public class ObjectManager : MonoBehaviour
 				targetPool = enemyM;
 				break;
 
+			case "EnemyD":
+				targetPool = enemyD;
+				break;
+
 			case "EnemyS":
 				targetPool = enemyS;
 				break;
@@ -247,6 +260,10 @@ public class ObjectManager : MonoBehaviour
 
 			case "EnemyM":
 				targetPool = enemyM;
+				break;
+
+			case "EnemyD":
+				targetPool = enemyD;
 				break;
 
 			case "EnemyS":

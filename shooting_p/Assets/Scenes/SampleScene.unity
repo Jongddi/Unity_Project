@@ -3217,6 +3217,7 @@ MonoBehaviour:
   - 
   - 
   - 
+  - 
   spawnPoints:
   - {fileID: 1721117120}
   - {fileID: 987194378}
@@ -3289,6 +3290,8 @@ MonoBehaviour:
   enemyLPrefab: {fileID: 8119049167224968654, guid: dcd155b532d3b64419969bc2a0d3bf17,
     type: 3}
   enemyMPrefab: {fileID: 1197059475320782294, guid: 12d06a7dc82367d4c87d44b799b2a732,
+    type: 3}
+  enemyDPrefab: {fileID: 1197059475320782294, guid: 57bd2f0330d816642b5dc827a67622f3,
     type: 3}
   enemySPrefab: {fileID: 1634250992491699572, guid: 8476941ef5c21c841b937e92c05e3ad4,
     type: 3}

@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     void Awake()
 	{
         spawnList = new List<Spawn>();
-        enemyObjs = new string[] { "EnemyS", "EnemyM", "EnemyL", "EnemyB" };
+        enemyObjs = new string[] { "EnemyS", "EnemyM", "EnemyD", "EnemyL", "EnemyB" };
         StageStart();
     }
 
@@ -128,11 +128,14 @@ public class GameManager : MonoBehaviour
             case "M":
                 enemyIndex = 1;
                 break;
-            case "L":
+            case "D":
                 enemyIndex = 2;
                 break;
-            case "B":
+            case "L":
                 enemyIndex = 3;
+                break;
+            case "B":
+                enemyIndex = 4;
                 break;
         }
         int enemyPoint = spawnList[spawnIndex].point;
@@ -140,7 +143,7 @@ public class GameManager : MonoBehaviour
         enemy.transform.position = spawnPoints[enemyPoint].position;
 
         Rigidbody2D rigid = enemy.GetComponent<Rigidbody2D>();
-        Enemy enemyLogic = enemy.GetComponent<Enemy>();
+		Enemy enemyLogic = enemy.GetComponent<Enemy>();
         enemyLogic.player = player;
         enemyLogic.objectManager = objectManager;
         enemyLogic.gameManager = this;

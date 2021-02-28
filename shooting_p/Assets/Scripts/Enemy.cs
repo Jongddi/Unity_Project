@@ -53,6 +53,10 @@ public class Enemy : MonoBehaviour
                 health = 10;
                 break;
 
+            case "D":
+                health = 20;
+                break;
+
             case "S":
                 health = 5;
                 break;
@@ -236,6 +240,16 @@ public class Enemy : MonoBehaviour
             Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
             Vector3 dirVec = player.transform.position - transform.position;
             rigid.AddForce(dirVec.normalized * 2, ForceMode2D.Impulse);
+        }
+
+        if (enemyName == "D")
+        {
+            GameObject bullet = objectManager.MakeObj("EnemyBulletA");
+            bullet.transform.position = transform.position;
+
+            Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
+            Vector3 dirVec = player.transform.position - transform.position;
+            rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
         }
 
         if (enemyName == "L")
