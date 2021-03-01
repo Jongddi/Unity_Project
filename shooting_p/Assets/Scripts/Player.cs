@@ -138,16 +138,41 @@ public class Player : MonoBehaviour
                 rigidB.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 break;
             case 4:
-            case 5:
-            case 6:
-                GameObject bulletR2 = objectManager.MakeObj("PlayerBulletB");
-                GameObject bulletL2 = objectManager.MakeObj("PlayerBulletB");
-                bulletR2.transform.position = transform.position + Vector3.right * 0.25f;
-                bulletL2.transform.position = transform.position + Vector3.left * 0.25f;
-                Rigidbody2D rigidR2 = bulletR2.GetComponent<Rigidbody2D>();
+                GameObject bulletB2 = objectManager.MakeObj("PlayerBulletB");
+                bulletB2.transform.position = transform.position;
+                Rigidbody2D rigidB2 = bulletB2.GetComponent<Rigidbody2D>();
+                rigidB2.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                GameObject bulletL2 = objectManager.MakeObj("PlayerBulletA");
+                bulletL2.transform.position = transform.position + Vector3.left * 0.3f;
                 Rigidbody2D rigidL2 = bulletL2.GetComponent<Rigidbody2D>();
-                rigidR2.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 rigidL2.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                break;
+            case 5:
+                GameObject bulletB3 = objectManager.MakeObj("PlayerBulletB");
+                bulletB3.transform.position = transform.position;
+                Rigidbody2D rigidB3 = bulletB3.GetComponent<Rigidbody2D>();
+                rigidB3.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                GameObject bulletR2 = objectManager.MakeObj("PlayerBulletA");
+                bulletR2.transform.position = transform.position + Vector3.right * 0.3f;
+                GameObject bulletL3 = objectManager.MakeObj("PlayerBulletA");
+                bulletL3.transform.position = transform.position + Vector3.left * 0.3f;
+                Rigidbody2D rigidR2 = bulletR2.GetComponent<Rigidbody2D>();
+                Rigidbody2D rigidL3 = bulletL3.GetComponent<Rigidbody2D>();
+                rigidR2.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                rigidL3.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                break;
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+                GameObject bulletR3 = objectManager.MakeObj("PlayerBulletB");
+                GameObject bulletL4 = objectManager.MakeObj("PlayerBulletB");
+                bulletR3.transform.position = transform.position + Vector3.right * 0.25f;
+                bulletL4.transform.position = transform.position + Vector3.left * 0.25f;
+                Rigidbody2D rigidR3 = bulletR3.GetComponent<Rigidbody2D>();
+                Rigidbody2D rigidL4 = bulletL4.GetComponent<Rigidbody2D>();
+                rigidR3.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+                rigidL4.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
                 break;
         }
 
@@ -350,11 +375,11 @@ public class Player : MonoBehaviour
 
     void AddFollower()
     {
-        if (power == 4)
+        if (power == 7)
             Followers[0].SetActive(true);
-        else if (power == 5)
+        else if (power == 8)
             Followers[1].SetActive(true);
-        else if (power == 6)
+        else if (power == 9)
             Followers[2].SetActive(true);
     }
 

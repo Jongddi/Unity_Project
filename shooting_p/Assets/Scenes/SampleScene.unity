@@ -748,7 +748,7 @@ MonoBehaviour:
   life: 3
   score: 0
   power: 1
-  maxPower: 6
+  maxPower: 9
   boom: 0
   maxBoom: 3
   speed: 3
