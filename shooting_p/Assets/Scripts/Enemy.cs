@@ -46,19 +46,19 @@ public class Enemy : MonoBehaviour
                 break;
 
             case "L":
-                health = 40;
+                health = 50;
                 break;
 
             case "M":
-                health = 10;
+                health = 20;
                 break;
 
             case "D":
                 health = 20;
                 break;
-
+                
             case "S":
-                health = 5;
+                health = 7;
                 break;
         }
 	}

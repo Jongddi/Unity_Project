@@ -151,13 +151,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: M
   enemyScore: 250
+  patternIndex: 0
+  curPatternCount: 0
+  maxPatternCount: 
   speed: 3
-  health: 10
+  health: 20
+  maxShotDelay: 0
+  curShotDelay: 0
   sprites:
   - {fileID: -7642239419928554605, guid: c50817e3882d5754c8e8a2852b1c3f11, type: 3}
   - {fileID: -7911572535675539837, guid: c50817e3882d5754c8e8a2852b1c3f11, type: 3}
-  maxShotDelay: 0
-  curShotDelay: 0
   bulletObjA: {fileID: 343941408704060213, guid: a6861892186b38c44a18820f27d16f93,
     type: 3}
   bulletObjB: {fileID: 5723711374722952704, guid: 3d88fda48566f064cb06c8a34212779c,
@@ -170,3 +173,4 @@ MonoBehaviour:
     type: 3}
   player: {fileID: 0}
   objectManager: {fileID: 0}
+  gameManager: {fileID: 0}
