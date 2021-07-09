@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5723711374722952733}
   - component: {fileID: 5723711374722952735}
   - component: {fileID: 5323720452507233594}
-  - component: {fileID: 8461165005068056049}
+  - component: {fileID: 4709877304966800868}
   m_Layer: 0
   m_Name: Enemy_Bullet_D
   m_TagString: EnemyBullet
@@ -73,8 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7431529995326980795, guid: a6dec7e488e04884d845ba13f9a54f95,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: db120ce8261fcd849976d31c61b398b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 1
@@ -120,8 +119,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dmg: 1
   isRotate: 0
---- !u!70 &8461165005068056049
-CapsuleCollider2D:
+--- !u!60 &4709877304966800868
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -134,5 +133,18 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.25, y: 0.375}
-  m_Direction: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.4625, y: 0.45}
+    newSize: {x: 0.25, y: 0.375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.185, y: 0.17999999}
+      - {x: -0.185, y: -0.17999999}
+      - {x: 0.185, y: -0.17999999}
+      - {x: 0.185, y: 0.17999999}

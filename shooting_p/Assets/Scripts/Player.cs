@@ -30,7 +30,6 @@ public class Player : MonoBehaviour
     //Class,GetComponent
     public GameManager gameManager;
     public ObjectManager objectManager;
-    Animator anim;
     SpriteRenderer spriteRenderer;
 
     //Prefab
@@ -41,7 +40,6 @@ public class Player : MonoBehaviour
 
     void Awake()        //프로그램 실행 전 다른 클래스에서 오는 컴포넌트 초기화
     {
-        anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -96,11 +94,6 @@ public class Player : MonoBehaviour
         Vector3 nextPos = new Vector3(h, v, 0) * speed * Time.deltaTime;            //transform이동은 항상 델타타임을 곱해야함
 
         transform.position = curPos + nextPos;
-
-        if (Input.GetButtonDown("Horizontal") || Input.GetButtonUp("Horizontal"))
-        {
-            anim.SetInteger("Input", (int)h);
-        }
     }
 
     public void ButtonADown()
@@ -181,8 +174,7 @@ public class Player : MonoBehaviour
 
     void Boom()
 	{
-        // if (!Input.GetButton("Fire2"))
-        if (!isButtonA)
+        if (!Input.GetButton("Fire2"))
             return;
 
         if (isBoomTime)

@@ -73,9 +73,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -1947097705129849200, guid: e24d9b588d3a8b648a2230ab1f731d48,
-    type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 796d6caad64eb6f489c43b89edb3e2ce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -123,14 +122,14 @@ MonoBehaviour:
   enemyScore: 5000
   patternIndex: -1
   curPatternCount: 0
-  maxPatternCount: 02000000030000002c0100000b000000
+  maxPatternCount: 0200000003000000c90000000f000000
   speed: 1.5
   health: 3000
   maxShotDelay: 0
   curShotDelay: 0
   sprites:
-  - {fileID: 8596640243658272642, guid: c50817e3882d5754c8e8a2852b1c3f11, type: 3}
-  - {fileID: -5720429097031363069, guid: c50817e3882d5754c8e8a2852b1c3f11, type: 3}
+  - {fileID: 21300000, guid: 796d6caad64eb6f489c43b89edb3e2ce, type: 3}
+  - {fileID: 21300000, guid: 4eebfcd3338ab7649bc3d0e0be0c7417, type: 3}
   bulletObjA: {fileID: 0}
   bulletObjB: {fileID: 0}
   itemCoin: {fileID: 0}
@@ -171,6 +170,6 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.2}
-  m_Size: {x: 2.75, y: 2}
+  m_Offset: {x: -0.00000073017, y: -0.12510909}
+  m_Size: {x: 2.5253363, y: 1.8502314}
   m_Direction: 1

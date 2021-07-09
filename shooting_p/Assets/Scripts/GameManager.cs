@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public Image[] lifeImage;
     public Image[] boomImage;
     public GameObject gameOverSet;
+    public GameObject gameClearSet;
     public ObjectManager objectManager;
 
     public List<Spawn> spawnList;
@@ -62,17 +63,18 @@ public class GameManager : MonoBehaviour
         //Fade Out
         fadeAnim.SetTrigger("Out");
 
-        //Player Repos
-        player.transform.position = playerPos.position;
-
         //Stage Increament
         stage++;
-        if (stage < 2)
+        if (stage > 3)
         {
-            Invoke("gameOver", 6);
+            Invoke("GameClear", 5.5f);
+            //Player Repos
+            player.transform.position = playerPos.position;
         }
         else
+		{
             Invoke("StageStart", 5);
+        }
     }
 
     void ReadSpawnFile()
@@ -229,6 +231,11 @@ public class GameManager : MonoBehaviour
     public void GameOver()
 	{
         gameOverSet.SetActive(true);
+	}
+
+    public void GameClear()
+	{
+        gameClearSet.SetActive(true);
 	}
 
     public void GameTry()

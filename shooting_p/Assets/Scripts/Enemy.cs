@@ -41,8 +41,8 @@ public class Enemy : MonoBehaviour
 		switch(enemyName)
 		{
             case "B":
-                health = 3000;
                 Invoke("Stop", 3);
+                health = 2000;
                 break;
 
             case "L":
@@ -217,7 +217,6 @@ public class Enemy : MonoBehaviour
         else
             Invoke("Think", 3);
     }
-
 
     void Update()       //초당 N회 실행
     {
